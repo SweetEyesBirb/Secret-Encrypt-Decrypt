@@ -1,28 +1,41 @@
 import questionary
 
-from scrambler import _interactive
-from lock_pdf import pdf_menu_workflow
-from conversion import run_pdf_to_text_menu_workflow, run_text_to_pdf_menu_workflow
+from src.scrambler import _interactive
+from src.lock_pdf import pdf_menu_workflow
+from src.conversion import run_pdf_to_text_menu_workflow, run_text_to_pdf_menu_workflow
+from src.lock_unlock import lock_unlock_menu_workflow
 
 
 def main():
 
-    options = ["encrypt-decrypt", "txt to PDF", "lock PDF", "PDF to txt"]
+    options = ["encrypt-decrypt", "lock-unlock file", "txt to PDF", "lock PDF", "PDF to txt"]
 
-    selected_option = questionary.select(
-        message= "Select an option",
-        choices= options,
-        pointer= "->"
-    ).ask()
+    go_again = True
 
-    if selected_option == "encrypt-decrypt":
-        _interactive()
-    elif selected_option == "txt to PDF":
-        run_text_to_pdf_menu_workflow()
-    elif selected_option == "lock PDF":
-        pdf_menu_workflow()
-    elif selected_option == "PDF to txt":
-        run_pdf_to_text_menu_workflow()
+    while go_again:
+        selected_option = questionary.select(
+            message= "Select an option",
+            choices= options,
+            pointer= "->"
+        ).ask()
+
+        if selected_option == "encrypt-decrypt":
+            _interactive()
+        elif selected_option == "lock-unlock file":
+            lock_unlock_menu_workflow()
+        elif selected_option == "txt to PDF":
+            run_text_to_pdf_menu_workflow()
+        elif selected_option == "lock PDF":
+            pdf_menu_workflow()
+        elif selected_option == "PDF to txt":
+            run_pdf_to_text_menu_workflow()
+        
+        go_again = questionary.confirm(
+            message= "Would you like to perform another operation?"
+        ).ask()
+
+        if not go_again:
+            break
 
 
 if __name__ == "__main__":
