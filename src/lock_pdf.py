@@ -15,7 +15,6 @@ def read_lock_save_pdf(pdf_path, output_path, password):
         # Encrypt the writer with a password (uses strong AES-256 encryption)
         writer.encrypt(password)
 
-        # Save the newly locked PDF to a file
         with open(output_path, "wb") as f:
             writer.write(f)
     
@@ -50,11 +49,11 @@ def pdf_menu_workflow():
             pass_match = False
 
             while not pass_match:
-                password = questionary.text(
+                password = questionary.password(
                     message= "Type your secure password",
                 ).ask()
 
-                re_password = questionary.text(
+                re_password = questionary.password(
                     message= "Re-type your password",
                 ).ask()
 

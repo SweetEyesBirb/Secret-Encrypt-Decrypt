@@ -344,7 +344,8 @@ def _interactive() -> None:
                 else:
                     print("File does not exist, please check the file path")
 
-            out_path = input("  Output file : ").strip()
+            out_path = input("  Output file : ").strip().strip("\"")
+            out_path = out_path + ".txt" if ".txt" not in out_path else out_path
 
             vkey = fkey = key_file = None
             if mode in ("vigenere", "stacked"):
