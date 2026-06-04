@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 scrambler.py — Multi-layer password scrambler
 ==============================================
@@ -31,8 +30,10 @@ import argparse
 import base64
 import hashlib
 import sys
-import os
 from pathlib import Path
+
+from src.utils.utils import check_if_file_exists
+
 
 # ── Optional dependency guard ─────────────────────────────────────────────────
 try:
@@ -283,9 +284,6 @@ def process_file(
     dst_path.write_text("\n".join(out_lines) + "\n", encoding="utf-8")
     return processed, skipped
 
-def _check_if_file_exists(input_file: str):
-
-    return os.path.exists(input_file)
 
 # ══════════════════════════════════════════════════════════════════════════════
 # Interactive menu
@@ -340,7 +338,7 @@ def _interactive() -> None:
             file_exists = False
             while not file_exists:
                 in_path  = input("  Input  file : ").strip().strip("\"")
-                if _check_if_file_exists(in_path):
+                if check_if_file_exists(in_path):
                     file_exists = True
                     break
                 else:
