@@ -8,3 +8,4 @@
 - Encrypt/decrypt single password
 - Encrypt/decrypt from `txt` files
 - Load Fernet key from file or type your key (string is then converted to Fernet key)
+- Encrypt/decrypt a txt file into a `.enc` file with a Fernet key to add an extra layer of security
