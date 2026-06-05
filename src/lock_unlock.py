@@ -93,7 +93,7 @@ def unlock_data_from_json(locked_file: str, output_txt: str,
 # Key input helper
 # ══════════════════════════════════════════════════════════════════════════════
 
-def _get_fernet_key_from_user() -> tuple[str | None, str | None]:
+def _get_fernet_key_from_user(locking=True) -> tuple[str | None, str | None]:
     """
     Prompt user to provide Fernet key either inline or from file.
     
@@ -110,7 +110,7 @@ def _get_fernet_key_from_user() -> tuple[str | None, str | None]:
     ).ask()
 
     if key_source == "Enter key inline":
-        return ask_for_key_and_validate()
+        return ask_for_key_and_validate(locking=locking)
     else:
         try:
             key_file = ask_for_path_and_validate("Enter the path to your Fernet key file")
@@ -167,7 +167,7 @@ def lock_unlock_menu_workflow() -> None:
             validate=lambda text: len(text) > 0 or "Path cannot be empty"
         ).ask()
 
-        fkey, key_file = _get_fernet_key_from_user()
+        fkey, key_file = _get_fernet_key_from_user(locking=False)
         
         unlock_data_from_json(locked_file=locked_path, output_txt=output_path, 
                              fkey=fkey, key_file=key_file)
