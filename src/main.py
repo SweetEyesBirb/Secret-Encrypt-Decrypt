@@ -1,6 +1,6 @@
 import questionary
 
-from src.scrambler import _interactive
+from src.tui.scrambler_menu import scrambler_menu
 from src.lock_pdf import pdf_menu_workflow
 from src.conversion import run_pdf_to_text_menu_workflow, run_text_to_pdf_menu_workflow
 from src.lock_unlock import lock_unlock_menu_workflow
@@ -14,13 +14,13 @@ def main():
 
     while go_again:
         selected_option = questionary.select(
-            message= "Select an option",
-            choices= options,
-            pointer= "->"
+            message="Select an option",
+            choices=options,
+            pointer="->"
         ).ask()
 
         if selected_option == "encrypt-decrypt":
-            _interactive()
+            scrambler_menu()
         elif selected_option == "lock-unlock file":
             lock_unlock_menu_workflow()
         elif selected_option == "txt to PDF":
@@ -29,9 +29,9 @@ def main():
             pdf_menu_workflow()
         elif selected_option == "PDF to txt":
             run_pdf_to_text_menu_workflow()
-        
+
         go_again = questionary.confirm(
-            message= "Would you like to perform another operation?"
+            message="Would you like to perform another operation?"
         ).ask()
 
         if not go_again:
